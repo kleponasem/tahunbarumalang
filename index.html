@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Tahun Baru</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #countdown {
+            font-size: 36px;
+            color: rgb(107, 98, 98);
+            margin: 20px 0;
+        }
+        #download-link {
+            display: none; /* tombol download disembunyikan dulu */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Selamat Tahun Baru!</h1>
+    <p>File ucapan akan terbuka setelah hitung mundur selesai:</p>
+    <div id="countdown"></div> <!-- ini tempat countdown -->
+    <a id="download-link" href="ucapan_tahun_baru.docx" download>
+        <button>Download Ucapan Tahun Baru</button>
+    </a>
+
+    <script>
+        // Tentukan waktu target (1 Januari 2025, pukul 00:00:00)
+        const targetDate = new Date("January 1, 2025 00:00:00").getTime();
+        const countdownElement = document.getElementById("countdown");
+        const downloadLink = document.getElementById("download-link");
+
+        // Update hitung mundur setiap 1 detik
+        const timer = setInterval(() => {
+            const now = new Date().getTime(); // waktu sekarang
+            const timeLeft = targetDate - now; // selisih waktu
+
+            // Hitung hari, jam, menit, detik
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Tampilkan hitungan mundur
+            countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            // Kalau waktu habis
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                countdownElement.textContent = "Selamat Tahun Baru!";
+                downloadLink.style.display = "inline-block"; // tampilkan tombol download
+            }
+        }, 1000); // Update setiap 1 detik
+    </script>
+</body>
+</html>
+
